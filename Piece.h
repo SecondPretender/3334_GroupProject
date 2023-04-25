@@ -9,7 +9,7 @@
 #ifndef GROUPPROJECT_PIECE_H
 #include "SDL_Plotter.h"
 #include "PcShell.h"
-
+#include "math.h"
 using namespace std;
 
 
@@ -31,6 +31,8 @@ public:
         for (int i = 0; i < size; i++) {
             pVis[i] = new color[size];
         }
+        xC1 = -1;
+        yC1 = -1;
     }
     ~Piece(){
         delete tP;
@@ -77,6 +79,15 @@ public:
                 g.plotPixel(xC1 + i, yC1 + j, pVis[i][j]);
             }
         }
+    }
+    bool clickable(int x, int y){
+        int tX = x - xC1;
+        int tY = y - yC1;
+
+        if(tX < size && tY < size && tX > 0 && tY > 0){
+            return true;
+        }
+        return false;
     }
 
     void clickPlace(int x, int y, SDL_Plotter& g){

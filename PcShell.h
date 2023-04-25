@@ -23,7 +23,8 @@ public:
     bool checkCollide(int x, int y){
         int tX = x - xC1;
         int tY = y - yC1;
-        if(x < size && y < size){
+
+        if(tX < size && tY < size && tX > 0 && tY > 0){
             return true;
         }
         return false;

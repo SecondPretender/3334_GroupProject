@@ -3,8 +3,8 @@
  * Function: main
  * Changelog:
  * 4/16/2023 created by Peter McGuinness
- * 4/23/2023 added pieceLinker and corresponding bits
- *
+ * 4/23/2023 added pieceLinker and corresponding bits(did not work)
+ * 4/25/2023 started making clickable functionality: Peter McGuinness
 */
 #include <iostream>
 #include <cmath>
@@ -69,12 +69,14 @@ int main(int argc, char ** argv)
     //pieces[0].setLoc(0,0);
 
     //pieces[0].printSquare(g);
-
+    //pieces[19].printSquare(g);
     for(int i = 0; i < 25; i++){
         pieces[i].setLoc(pieces[i].getXc1() + xOff, pieces[i].getYc1());
-        //pieces[i].printSquare(g);
+        //cout << i << ":" << pieces[i].getXc1() << "," << pieces[i].getYc1() << endl;
+        pieces[i].printSquare(g);
 
     }
+    //pieces[19].printSquare(g);
 
     for(int i = 0+xOff; i < maxSZ+xOff; i++){
         for(int j = 0; j < maxSZ; j++){
@@ -90,8 +92,7 @@ int main(int argc, char ** argv)
     color c;
     int size;
     Uint32 RGB;
-    delete[] arr;
-    delete[] pieces;
+
     while (!g.getQuit())
     {
 
@@ -112,16 +113,24 @@ int main(int argc, char ** argv)
             //case click: place piece down if outside puzzle border, if inside check for match
 
             p = g.getMouseClick();
-            size = rand()%50;
-            c.R  = rand()%256;
-            c.G  = rand()%256;
-            c.B  = rand()%256;
-            drawCircle(p, size, c, g);
+
+            for(int i = 0; i < PIECECNT; i++){
+
+                if(pieces[i].clickable(p.x, p.y)){
+                    cout << i << endl;
+                    cout << p.x << "," << pieces[i].getXc1() << ":" <<
+                    p.y << "," << pieces[i].getYc1() << ":" << endl;
+                    //break;
+                }
+                //cout << i << ":" << pieces[i].getXc1() << "," << pieces[i].getYc1() << endl;
+            }
         }
         g.update();
 
     }
-    delete plink;
+    //delete plink;
+    delete[] arr;
+    delete[] pieces;
     return 0;
 }
 
@@ -144,3 +153,4 @@ void printLinked(pieceLinker* l, SDL_Plotter& g){
         printLinked(l->next, g);
     }
 }
+

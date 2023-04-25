@@ -1,0 +1,12 @@
+# ninja log v5
+5	931	7040145976191139	CMakeFiles/GroupProject.dir/main.cpp.obj	3afec1036dd86fbc
+7	1302	7034881823753365	CMakeFiles/GroupProject.dir/SDL_Plotter.cpp.obj	dfcc25b17de4aa4e
+931	1459	7040145981387175	GroupProject.exe	9be1686e8d84b373
+4	874	7040146172761733	CMakeFiles/GroupProject.dir/main.cpp.obj	3afec1036dd86fbc
+875	1383	7040146177787696	GroupProject.exe	9be1686e8d84b373
+3	1419	7040147627355365	CMakeFiles/GroupProject.dir/main.cpp.obj	3afec1036dd86fbc
+1420	1978	7040147632856617	GroupProject.exe	9be1686e8d84b373
+6	1020	7040147724998991	CMakeFiles/GroupProject.dir/main.cpp.obj	3afec1036dd86fbc
+1020	1540	7040147730096915	GroupProject.exe	9be1686e8d84b373
+4	1074	7040148114345153	CMakeFiles/GroupProject.dir/main.cpp.obj	3afec1036dd86fbc
+1075	1591	7040148119454600	GroupProject.exe	9be1686e8d84b373

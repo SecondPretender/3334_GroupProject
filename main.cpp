@@ -92,10 +92,10 @@ int main(int argc, char ** argv)
     color c;
     int size;
     Uint32 RGB;
-
+    bool selectState = false;
+    int currP;
     while (!g.getQuit())
     {
-
         if(g.kbhit()){
 
             switch(toupper(g.getKey())){
@@ -117,12 +117,29 @@ int main(int argc, char ** argv)
             for(int i = 0; i < PIECECNT; i++){
 
                 if(pieces[i].clickable(p.x, p.y)){
-                    cout << i << endl;
+
+                    /*cout << i << endl;
                     cout << p.x << "," << pieces[i].getXc1() << ":" <<
-                    p.y << "," << pieces[i].getYc1() << ":" << endl;
-                    //break;
+                         p.y << "," << pieces[i].getYc1() << ":" << endl;*/
+                    currP = i;
+                    selectState = true;
                 }
-                //cout << i << ":" << pieces[i].getXc1() << "," << pieces[i].getYc1() << endl;
+
+
+                    //break;
+            }
+                //cout << i << ":" << pieces[i].getXc1() << "," << pieces[i].getYc1() << endl
+        }
+        while(!g.getQuit() && selectState){
+            if(g.mouseClick()){
+                p = g.getMouseClick();
+                pieces[currP].setLoc(p.x, p.y);
+                g.clear();
+                for(int j = 0; j < PIECECNT; j++){
+                    pieces[j].printSquare(g);
+                }
+
+                selectState = false;
             }
         }
         g.update();

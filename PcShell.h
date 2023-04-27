@@ -1,5 +1,8 @@
 //
 // Created by peter on 4/18/2023.
+/*
+ * 4/27/2023 changed checkCollide logic
+ */
 //
 
 using namespace std;
@@ -18,6 +21,12 @@ public:
         yC1 = tShell.yC1;
         size = tShell.size;
         return this;
+    }
+    int getX(){
+        return xC1;
+    }
+    int getY(){
+        return yC1;
     }
 
     bool checkCollide(int x, int y){

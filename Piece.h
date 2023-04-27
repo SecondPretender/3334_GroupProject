@@ -3,6 +3,7 @@
 /*Changelog:
  * 4/17/2023 created by Peter McGuinness
  * 4/18/2023 added printing functionality
+ * 4/27/2023 added borders to pieces by Xavier
  */
 //
 
@@ -20,6 +21,7 @@ private:
     int yC1;
     color** pVis;
     PcShell* tP;
+    bool click = true;
 public:
     Piece(){
 
@@ -49,6 +51,7 @@ public:
         }
         xC1 = tPiece.xC1;
         yC1 = tPiece.yC1;
+        tP = tPiece.tP;
         return *this;
     }
     Piece(int s, color** bigC, int x, int y){
@@ -76,11 +79,19 @@ public:
 
         for(int i = 0; i < size; i++){
             for(int j = 0; j < size; j++){
-                g.plotPixel(xC1 + i, yC1 + j, pVis[i][j]);
+                if (i == 0 ||  i == size-1 || j == 0 || j == size-1) {
+                    g.plotPixel(xC1+i, yC1+j, color(0,0,0));
+                }
+                else {
+                    g.plotPixel(xC1 + i, yC1 + j, pVis[i][j]);
+                }
             }
         }
     }
     bool clickable(int x, int y){
+        if(!click){
+            return false;
+        }
         int tX = x - xC1;
         int tY = y - yC1;
 
@@ -89,13 +100,19 @@ public:
         }
         return false;
     }
+    void switchClick(){
+        click  = false;
+    }
 
-    void clickPlace(int x, int y, SDL_Plotter& g){
+    bool clickPlace(int x, int y){
         //first check if it collides with associated PcShell
         if(tP->checkCollide(x, y)){
-           cout << "a" << endl;
-        }
 
+            xC1 = tP->getX();
+            yC1 = tP->getY();
+            return true;
+        }
+        return false;
         //after that, determine xC1 position based on center
         //prolly just input x - size/2
     }

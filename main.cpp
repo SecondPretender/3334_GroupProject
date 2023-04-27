@@ -5,6 +5,7 @@
  * 4/16/2023 created by Peter McGuinness
  * 4/23/2023 added pieceLinker and corresponding bits(did not work)
  * 4/25/2023 started making clickable functionality: Peter McGuinness
+ * 4/27/2023 made PcShell functionality (snap to final place)
 */
 #include <iostream>
 #include <cmath>
@@ -45,7 +46,7 @@ int main(int argc, char ** argv)
     //TEMP: CREATE A MASSIVE 2D ARRAY OURSELVES
 
     int maxSZ = 500;
-    int xOff = 250;
+    int xOff = 500;
     color** arr = new color*[maxSZ];
     for(int i = 0; i < maxSZ; i++){
         arr[i] = new color[maxSZ];
@@ -83,10 +84,10 @@ int main(int argc, char ** argv)
             //g.plotPixel(i, j, arr[i-xOff][j]);
         }
         color c(0, 0, 0);
-        g.plotPixel(xOff, i-xOff, c);
+        /*g.plotPixel(xOff, i-xOff, c);
         g.plotPixel(xOff+maxSZ, i-xOff, c);
         g.plotPixel(i, 0, c);
-        g.plotPixel(i, 499, c);
+        g.plotPixel(i, 499, c);*/
     }
     point p;
     color c;
@@ -134,6 +135,9 @@ int main(int argc, char ** argv)
             if(g.mouseClick()){
                 p = g.getMouseClick();
                 pieces[currP].setLoc(p.x, p.y);
+                if(pieces[currP].clickPlace(p.x, p.y)){
+                    pieces[currP].switchClick();
+                }
                 g.clear();
                 for(int j = 0; j < PIECECNT; j++){
                     pieces[j].printSquare(g);

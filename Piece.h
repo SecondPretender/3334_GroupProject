@@ -3,7 +3,9 @@
 /*Changelog:
  * 4/17/2023 created by Peter McGuinness
  * 4/18/2023 added printing functionality
- * 4/27/2023 added borders to pieces by Xavier
+ * 4/27/2023 added borders to pieces: Xavier Lopez
+ * 4/28/2023 added new border functionality: Peter McGuinness
+ * 4/30/2023 added rotations: Peter McGuinness, Alex DeVries
  */
 //
 
@@ -11,6 +13,7 @@
 #include "SDL_Plotter.h"
 #include "PcShell.h"
 #include "math.h"
+
 using namespace std;
 
 
@@ -20,6 +23,7 @@ private:
     int xC1;//denotes upper left corner
     int yC1;
     color** pVis;
+    color bCol;
     PcShell* tP;
     bool click = true;
 public:
@@ -35,6 +39,8 @@ public:
         }
         xC1 = -1;
         yC1 = -1;
+        color tCol(0, 0, 0);
+        bCol = tCol;
     }
     ~Piece(){
         delete tP;
@@ -52,6 +58,7 @@ public:
         xC1 = tPiece.xC1;
         yC1 = tPiece.yC1;
         tP = tPiece.tP;
+        bCol = tPiece.bCol;
         return *this;
     }
     Piece(int s, color** bigC, int x, int y){
@@ -70,6 +77,8 @@ public:
                 pVis[i][j] = bigC[x+i][y+j];
             }
         }
+        color tCol(0, 0, 0);
+        bCol = tCol;
     }
     void setLoc(int x, int y){
         xC1 = x;
@@ -78,13 +87,58 @@ public:
     void printSquare(SDL_Plotter& g){
 
         for(int i = 0; i < size; i++){
-            for(int j = 0; j < size; j++){
-                if (i == 0 ||  i == size-1 || j == 0 || j == size-1) {
-                    g.plotPixel(xC1+i, yC1+j, color(0,0,0));
+            for(int j = 0; j < size; j++) {
+                g.plotPixel(xC1 + i, yC1 + j, pVis[i][j]);
+            }
+        }
+        if(click == true){
+            //cout << bCol.B << bCol.G << bCol.R;
+            printBorder(g);
+        }
+
+    }
+    void printBorder(SDL_Plotter &g){
+        for(int i = 0; i < size; i++){
+            if(i == 0 || i == size-1) {
+                for (int j = 0; j < size; j++) {
+                    g.plotPixel(xC1 + i, yC1 + j, bCol);
                 }
-                else {
-                    g.plotPixel(xC1 + i, yC1 + j, pVis[i][j]);
-                }
+            }else{
+                g.plotPixel(xC1 + i, yC1, bCol);
+                g.plotPixel(xC1 + i, yC1 + size, bCol);
+            }
+
+        }
+    }
+    void rotateClockwise(){
+        for(int i = 0; i < size; i++){
+            for(int j = i; j < size; j++){
+                swap(pVis[i][j], pVis[j][i]);
+            }
+        }
+        for(int i = 0; i < size; i++){
+            for(int j = 0; j < size/2; j++){
+                swap(pVis[j][i], pVis[size-j-1][i]);
+            }
+        }
+    }
+    void rotateCounter(){
+        /*
+        for(int j = 0; j < size; j++){
+            for(int i = 0; i < j; i++){
+                swap(pVis[i][j], pVis[j][i]);
+            }
+        }*/
+
+        for(int j = size-1; j >= 0; j--){
+            for(int i = 0; i < j; i++){
+                swap(pVis[i][size-j-1], pVis[j][size-i-1]);
+            }
+        }
+
+        for(int i = 0; i < size; i++){
+            for(int j = 0; j < size/2; j++){
+                swap(pVis[j][i], pVis[size-j-1][i]);
             }
         }
     }
@@ -96,6 +150,8 @@ public:
         int tY = y - yC1;
 
         if(tX < size && tY < size && tX > 0 && tY > 0){
+            color tCol(0, 252, 0);
+            bCol = tCol;
             return true;
         }
         return false;
@@ -106,6 +162,8 @@ public:
 
     bool clickPlace(int x, int y){
         //first check if it collides with associated PcShell
+        color tCol(0, 0, 0);
+        bCol = tCol;
         if(tP->checkCollide(x, y)){
 
             xC1 = tP->getX();
@@ -123,6 +181,10 @@ public:
 
     int getYc1() const {
         return yC1;
+    }
+
+    int getSize() const{
+        return size;
     }
 };
 

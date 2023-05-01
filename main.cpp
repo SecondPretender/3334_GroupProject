@@ -1,5 +1,6 @@
 /*
- * Authors: Peter McGuinness
+ * Authors: Peter McGuinness, Alex DeVries, Xavier Lopez,
+ *          Derek Faucett, Christian Ocana
  * Function: main
  * Changelog:
  * 4/16/2023 created by Peter McGuinness

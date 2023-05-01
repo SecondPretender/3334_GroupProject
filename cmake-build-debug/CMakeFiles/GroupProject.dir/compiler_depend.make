@@ -443,6 +443,11 @@ CMakeFiles/GroupProject.dir/main.cpp.obj: C:/Users/peter/CLionProjects/GITGroupP
   C:/Program\ Files/JetBrains/CLion\ 2022.3.3/bin/mingw/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/bits/istream.tcc \
   C:/Program\ Files/JetBrains/CLion\ 2022.3.3/bin/mingw/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/cmath \
   C:/Program\ Files/JetBrains/CLion\ 2022.3.3/bin/mingw/x86_64-w64-mingw32/include/math.h \
+  C:/Program\ Files/JetBrains/CLion\ 2022.3.3/bin/mingw/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/fstream \
+  C:/Program\ Files/JetBrains/CLion\ 2022.3.3/bin/mingw/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/bits/codecvt.h \
+  C:/Program\ Files/JetBrains/CLion\ 2022.3.3/bin/mingw/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/x86_64-w64-mingw32/bits/basic_file.h \
+  C:/Program\ Files/JetBrains/CLion\ 2022.3.3/bin/mingw/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/x86_64-w64-mingw32/bits/c++io.h \
+  C:/Program\ Files/JetBrains/CLion\ 2022.3.3/bin/mingw/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/bits/fstream.tcc \
   C:/Users/peter/CLionProjects/GITGroupProject/3334_GroupProject/SDL_Plotter.h \
   C:/Program\ Files/JetBrains/CLion\ 2022.3.3/bin/mingw/include/SDL2/SDL.h \
   C:/Program\ Files/JetBrains/CLion\ 2022.3.3/bin/mingw/include/SDL2/SDL_main.h \
@@ -706,6 +711,8 @@ C:/Program\ Files/JetBrains/CLion\ 2022.3.3/bin/mingw/x86_64-w64-mingw32/include
 C:/Program\ Files/JetBrains/CLion\ 2022.3.3/bin/mingw/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/x86_64-w64-mingw32/bits/os_defines.h:
 
 C:/Program\ Files/JetBrains/CLion\ 2022.3.3/bin/mingw/x86_64-w64-mingw32/include/sdks/_mingw_ddk.h:
+
+C:/Program\ Files/JetBrains/CLion\ 2022.3.3/bin/mingw/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/bits/fstream.tcc:
 
 C:/Program\ Files/JetBrains/CLion\ 2022.3.3/bin/mingw/lib/gcc/x86_64-w64-mingw32/11.2.0/include/stdarg.h:
 
@@ -1242,5 +1249,13 @@ C:/Program\ Files/JetBrains/CLion\ 2022.3.3/bin/mingw/lib/gcc/x86_64-w64-mingw32
 C:/Program\ Files/JetBrains/CLion\ 2022.3.3/bin/mingw/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/bits/stl_queue.h:
 
 C:/Users/peter/CLionProjects/GITGroupProject/3334_GroupProject/main.cpp:
+
+C:/Program\ Files/JetBrains/CLion\ 2022.3.3/bin/mingw/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/fstream:
+
+C:/Program\ Files/JetBrains/CLion\ 2022.3.3/bin/mingw/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/bits/codecvt.h:
+
+C:/Program\ Files/JetBrains/CLion\ 2022.3.3/bin/mingw/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/x86_64-w64-mingw32/bits/basic_file.h:
+
+C:/Program\ Files/JetBrains/CLion\ 2022.3.3/bin/mingw/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/x86_64-w64-mingw32/bits/c++io.h:
 
 C:/Users/peter/CLionProjects/GITGroupProject/3334_GroupProject/Piece.h:

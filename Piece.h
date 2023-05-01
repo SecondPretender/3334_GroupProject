@@ -1,5 +1,5 @@
-//
-// Authors: Peter McGuinness
+// Authors: Peter McGuinness,Alex DeVries, Xavier Lopez,
+//          Derek Faucett, Christian Ocana
 /*Changelog:
  * 4/17/2023 created by Peter McGuinness
  * 4/18/2023 added printing functionality

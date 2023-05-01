@@ -1,6 +1,8 @@
 //
 // Created by peter on 4/18/2023.
 /*
+ * Authors: Peter McGuinness, Alex DeVries, Xavier Lopez,
+ *          Derek Faucett, Christian Ocana
  * 4/27/2023 changed checkCollide logic
  */
 //

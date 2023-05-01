@@ -53,7 +53,7 @@ int main(int argc, char ** argv)
     //TEMP: CREATE A MASSIVE 2D ARRAY OURSELVES
     int vicState = 0;
 
-    file.open("boothiful.png.txt");
+    file.open("500x500Walter.png.txt");
     int height = 0;
     int width = 0;
     int xOff = 500;

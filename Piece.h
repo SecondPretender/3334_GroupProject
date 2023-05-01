@@ -1,11 +1,11 @@
-// Authors: Peter McGuinness,Alex DeVries, Xavier Lopez,
-//          Derek Faucett, Christian Ocana
+//
+// Authors: Peter McGuinness, Alex DeVries, Xavier Lopez, Derek Faucett
+//          Christian Ocana
 /*Changelog:
  * 4/17/2023 created by Peter McGuinness
  * 4/18/2023 added printing functionality
- * 4/27/2023 added borders to pieces: Xavier Lopez
+ * 4/27/2023 added borders to pieces: Xavier
  * 4/28/2023 added new border functionality: Peter McGuinness
- * 4/30/2023 added rotations: Peter McGuinness, Alex DeVries
  */
 //
 
@@ -26,6 +26,7 @@ private:
     color bCol;
     PcShell* tP;
     bool click = true;
+    int orient;
 public:
     Piece(){
 
@@ -41,6 +42,7 @@ public:
         yC1 = -1;
         color tCol(0, 0, 0);
         bCol = tCol;
+        orient = 0;
     }
     ~Piece(){
         delete tP;
@@ -59,6 +61,7 @@ public:
         yC1 = tPiece.yC1;
         tP = tPiece.tP;
         bCol = tPiece.bCol;
+        orient = tPiece.orient;
         return *this;
     }
     Piece(int s, color** bigC, int x, int y){
@@ -79,6 +82,7 @@ public:
         }
         color tCol(0, 0, 0);
         bCol = tCol;
+        orient = 0;
     }
     void setLoc(int x, int y){
         xC1 = x;
@@ -121,6 +125,7 @@ public:
                 swap(pVis[j][i], pVis[size-j-1][i]);
             }
         }
+        orient = (orient +1)%4;
     }
     void rotateCounter(){
         /*
@@ -141,6 +146,7 @@ public:
                 swap(pVis[j][i], pVis[size-j-1][i]);
             }
         }
+        orient = (orient-1)%4;
     }
     bool clickable(int x, int y){
         if(!click){
@@ -164,7 +170,7 @@ public:
         //first check if it collides with associated PcShell
         color tCol(0, 0, 0);
         bCol = tCol;
-        if(tP->checkCollide(x, y)){
+        if(tP->checkCollide(x, y) && orient == 0){
 
             xC1 = tP->getX();
             yC1 = tP->getY();

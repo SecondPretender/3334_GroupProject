@@ -9,6 +9,7 @@
  * 4/27/2023 made PcShell functionality (snap to final place)
  * 4/30/2023 added piece shuffling, new image: Peter McGuinness, Alex DeVries
  * 4/30/2023 added piece rotating, vic state: Peter McGuinness, Alex DeVries
+ * 5/1/2023 added a way to generate a random seed for each starting picture: Christian Ocana
 */
 #include <iostream>
 #include <cmath>
@@ -53,7 +54,20 @@ int main(int argc, char ** argv)
     //TEMP: CREATE A MASSIVE 2D ARRAY OURSELVES
     int vicState = 0;
 
-    file.open("boothiful.png.txt");
+    srand(time(nullptr));
+    int pick = rand() % 4;
+    if (pick == 0) {
+        file.open("500x500amph.png.txt");
+    }
+    else if (pick == 1) {
+        file.open("500x500Buggy.png.txt");
+    }
+    else if (pick == 2) {
+        file.open("500x500Walter.png.txt");
+    }
+    else {
+        file.open("boothiful.png.txt");
+    }
     int height = 0;
     int width = 0;
     int xOff = 500;
@@ -159,20 +173,21 @@ int main(int argc, char ** argv)
                         if(g.kbhit()){
                             switch(toupper(g.getKey())){
                                 case 'Q': //cout << "rotate";
-                                pieces[i].rotateClockwise();
-                                pieces[i].printSquare(g);
-                                g.update();
+                                    pieces[i].rotateClockwise();
+                                    pieces[i].printSquare(g);
+                                    g.update();
                                     break;
                                 case 'E':// cout << "etator";
-                                pieces[i].rotateCounter();
-                                pieces[i].printSquare(g);
-                                g.update();
+                                    pieces[i].rotateCounter();
+                                    pieces[i].printSquare(g);
+                                    g.update();
                                     break;
                             }
                         }
                         if(g.mouseClick()){
                             p = g.getMouseClick();
                             pieces[currP].setLoc(p.x - pieces[i].getSize()/2, p.y - pieces[i].getSize()/2);
+
                             if(pieces[currP].clickPlace(p.x, p.y)){
                                 vicState ++;
                                 pieces[currP].switchClick();
@@ -189,9 +204,9 @@ int main(int argc, char ** argv)
                 }
 
 
-                    //break;
+                //break;
             }
-                //cout << i << ":" << pieces[i].getXc1() << "," << pieces[i].getYc1() << endl
+            //cout << i << ":" << pieces[i].getXc1() << "," << pieces[i].getYc1() << endl
         }
 
         g.update();
@@ -201,6 +216,7 @@ int main(int argc, char ** argv)
             cout << "WIN";
             vicState ++;
             winThis(g, "Trophy.png.txt");
+
         }
 
     }
@@ -239,9 +255,9 @@ void printAll(Piece* e, SDL_Plotter& g){
     //print border of the final spot
     color bCol(200, 100, 100);
     for(int i = 500; i < 510; i++){
-         for(int j = 0; j < 500; j++){
-             g.plotPixel(i, j, bCol);
-         }
+        for(int j = 0; j < 500; j++){
+            g.plotPixel(i, j, bCol);
+        }
 
     }
 }

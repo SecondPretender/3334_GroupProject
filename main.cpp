@@ -1,7 +1,15 @@
 /*
  * Authors: Peter McGuinness, Alex DeVries, Xavier Lopez,
  *          Derek Faucett, Christian Ocana
- * Function: main
+ * Assignment Title: Jigsaw Puzzle
+ * Assignment Description: This program creates a jigsaw puzzle game by using
+ * SDLPlotter to implement the game's behavior
+ * Due Date: 5/4/2023
+ * Date Created: 4/16/2023
+ * Date Last Modified: 5/3/2023
+ * Filename: main.cpp
+ *
+ *
  * Changelog:
  * 4/16/2023 created by Peter McGuinness
  * 4/23/2023 added pieceLinker and corresponding bits(did not work)
@@ -9,7 +17,13 @@
  * 4/27/2023 made PcShell functionality (snap to final place)
  * 4/30/2023 added piece shuffling, new image: Peter McGuinness, Alex DeVries
  * 4/30/2023 added piece rotating, vic state: Peter McGuinness, Alex DeVries
- * 5/1/2023 added a way to generate a random seed for each starting picture: Christian Ocana
+ * 5/01/2023 added a way to generate a random seed for each starting picture
+ *           when the game launches: Christian Ocana
+ * 5/03/2023 created detailed comments in the file: Christian Ocana
+ *
+ * Assumptions: It is assumed that the in-game pictures are the only pictures
+ * the user can have access to. It is also assumed that the user can restart
+ * the game by exiting out of the tab, even if they have not won yet.
 */
 #include <iostream>
 #include <cmath>
@@ -29,36 +43,55 @@ struct pieceLinker{
     Piece curr;
     pieceLinker* prev = nullptr;
     pieceLinker* next = nullptr;
+    /*
+     * pieceLinker (constructor)
+     */
     pieceLinker(){
 
     }
+    /*
+     * pieceLinker (constructor using one Piece)
+     */
     pieceLinker(Piece p){
         curr = p;
     }
+    /*
+     * pieceLinker (copy constructor)
+     */
     pieceLinker(Piece p, pieceLinker* p1, pieceLinker* p2){
         curr = p;
         prev = p1;
         next = p2;
     }
+    /*
+     * ~pieceLinker (destructor)
+     */
     ~pieceLinker(){
         delete next;
     }
 };
-void printLinked(pieceLinker* l, SDL_Plotter& g);
 
-int PIECECNT;
+void printLinked(pieceLinker* l, SDL_Plotter& g);
+static int PIECECNT = 25;
+
 int main(int argc, char ** argv)
 {
-    //difficult works: PIECECNT = 4(2x2), 16(4x4), 25(5x5), 100(10x10)
-    //has to be divisible with 500 or it goofs
-    PIECECNT = 25;
+    //Data Abstraction
     ifstream file;
     queue<Piece> pQueue;
+    //Generate random seed for each random picture that loads when game starts
+    srand(time(nullptr));
+
     //TEMP: CREATE A MASSIVE 2D ARRAY OURSELVES
     int vicState = 0;
-
-    srand(time(nullptr));
     int pick = rand() % 4;
+    int height = 0;
+    int width = 0;
+    int xOff = 500;
+    color** arr;
+    Piece* pieces;
+
+    //File input is based on the random number generated
     if (pick == 0) {
         file.open("500x500amph.png.txt");
     }
@@ -71,13 +104,9 @@ int main(int argc, char ** argv)
     else {
         file.open("boothiful.png.txt");
     }
-    int height = 0;
-    int width = 0;
-    int xOff = 500;
-
     file >> height;
     file >> width;
-    color** arr = new color*[height];
+    arr = new color*[height];
     for(int i = 0; i < height; i++){
         arr[i] = new color[width];
     }
@@ -91,17 +120,16 @@ int main(int argc, char ** argv)
         }
     }
     file.close();
-    Piece* pieces = new Piece[PIECECNT];
-    for(int i = 0; i < sqrt(PIECECNT); i ++){
-        for(int j = 0; j < sqrt(PIECECNT); j++){
-
-            pieces[(int)(sqrt(PIECECNT))*i + j] = *new Piece((500/sqrt(PIECECNT)), arr, (i*(500/sqrt(PIECECNT))), j*(500/sqrt(PIECECNT)));
+    pieces = new Piece[PIECECNT];
+    for(int i = 0; i < 5; i ++){
+        for(int j = 0; j < 5; j++){
+            pieces[5*i + j] = *new Piece(100, arr, (i*100), j*100);
         }
     }
 
+    //The process, implementation, and output can be seen after this point
 
     //ON START: associate an array of locations with puzzle pieces
-
     SDL_Plotter g(500,1020);
     //pieces[0].setLoc(0,0);
 
@@ -109,8 +137,7 @@ int main(int argc, char ** argv)
     //here we need to do random location
     //xOff + rand(0-400)
     //y = rand(0-400)
-    for(int i = 0; i < PIECECNT; i++){
-        //g.playSound();
+    for(int i = 0; i < 25; i++){
         int x1 = rand() % 400 + 10;
         int y1 = rand()%400;
         int rot = rand()%4;
@@ -119,7 +146,8 @@ int main(int argc, char ** argv)
         for(int r = 0; r < rot; r++){
             pieces[i].rotateClockwise();
         }
-        //cout << i << ":" << pieces[i].getXc1() << "," << pieces[i].getYc1() << endl;
+        //cout << i << ":" << pieces[i].getXc1() << ",";
+        //cout << pieces[i].getYc1() << endl;
         //pieces[i].printSquare(g);
 
     }
@@ -154,11 +182,13 @@ int main(int argc, char ** argv)
 
         if(g.mouseClick()){
             //if g.mousClick, compare location to stack of puzzle pieces
-            //when first match found, that piece is selected and we enter a second loop to place it
+            //when first match found, that piece is selected and we enter a
+            //second loop to place it
             ///DURING SPECIAL CASE:
             //case Q: rotate piece left
             //case E: rotate piece right
-            //case click: place piece down if outside puzzle border, if inside check for match
+            //case click: place piece down if outside puzzle border
+            //if inside check for match
 
             p = g.getMouseClick();
 
@@ -190,16 +220,17 @@ int main(int argc, char ** argv)
                         }
                         if(g.mouseClick()){
                             p = g.getMouseClick();
-                            pieces[currP].setLoc(p.x - pieces[i].getSize()/2, p.y - pieces[i].getSize()/2);
+                            pieces[currP].setLoc(p.x - pieces[i].getSize()/2,
+                                                 p.y - pieces[i].getSize()/2);
 
                             if(pieces[currP].clickPlace(p.x, p.y)){
                                 vicState ++;
                                 pieces[currP].switchClick();
                             }
                             g.clear();
-//                            for(int j = 0; j < PIECECNT; j++){
-//                                pieces[j].printSquare(g);
-//                            }
+                            //for(int j = 0; j < PIECECNT; j++){
+                            //    pieces[j].printSquare(g);
+                            //}
                             printAll(pieces, g);
                             selectState = false;
                         }
@@ -210,11 +241,12 @@ int main(int argc, char ** argv)
 
                 //break;
             }
-            //cout << i << ":" << pieces[i].getXc1() << "," << pieces[i].getYc1() << endl
+            //cout << i << ":" << pieces[i].getXc1() << ",";
+            //cout << pieces[i].getYc1() << endl;
         }
 
         g.update();
-        if(vicState == PIECECNT){
+        if(vicState == 25){
             //make the victory a bit more fun
             //audio? visuals?
             cout << "WIN";
@@ -231,7 +263,12 @@ int main(int argc, char ** argv)
     return 0;
 }
 
-
+/* drawCircle
+ * description: plots a circle based on the given location, size, and color
+ * return: nothing
+ * pre: a location point, size, color, and SDL Plotter exist
+ * post: a circle matching the given descriptions is plotted
+ */
 void drawCircle(point loc, int size, color c, SDL_Plotter& g){
     for(double i = -size; i <= size;i+=0.1){
         for(double j = -size; j <= size; j+=0.1){
@@ -242,6 +279,12 @@ void drawCircle(point loc, int size, color c, SDL_Plotter& g){
     }
 
 }
+/* printLinked
+ * description: prints the puzzle pieces that are connected together
+ * return: nothing
+ * pre: connected puzzle pieces and SDL Plotter exist
+ * post: displays all puzzle pieces that are officially linked with each other
+ */
 void printLinked(pieceLinker* l, SDL_Plotter& g){
     //cout << l->curr.getXc1();
     l->curr.printSquare(g);
@@ -250,6 +293,12 @@ void printLinked(pieceLinker* l, SDL_Plotter& g){
         printLinked(l->next, g);
     }
 }
+/* printAll
+ * description: plots all puzzle pieces
+ * return: nothing
+ * pre: multiple pieces and SDL_Plotter exist
+ * post: prints all the puzzle pieces on screen
+ */
 void printAll(Piece* e, SDL_Plotter& g){
     //print all the goons
     for(int i = 0; i < PIECECNT; i++){
@@ -265,6 +314,12 @@ void printAll(Piece* e, SDL_Plotter& g){
 
     }
 }
+/* winThis
+ * description: display the victory screen once the puzzle has been solved
+ * return: nothing
+ * pre: an SDL_Plotter and file name exist
+ * post: displays the victory screen with a picture from the file name
+ */
 void winThis(SDL_Plotter& g, string fileName){
     ifstream file;
     file.open(fileName);
@@ -289,6 +344,5 @@ void winThis(SDL_Plotter& g, string fileName){
     }
     file.close();
     g.update();
-
 }
 

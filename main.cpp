@@ -45,10 +45,13 @@ struct pieceLinker{
     }
 };
 void printLinked(pieceLinker* l, SDL_Plotter& g);
-static int PIECECNT = 25;
 
+int PIECECNT;
 int main(int argc, char ** argv)
 {
+    //difficult works: PIECECNT = 4(2x2), 16(4x4), 25(5x5), 100(10x10)
+    //has to be divisible with 500 or it goofs
+    PIECECNT = 25;
     ifstream file;
     queue<Piece> pQueue;
     //TEMP: CREATE A MASSIVE 2D ARRAY OURSELVES
@@ -89,10 +92,10 @@ int main(int argc, char ** argv)
     }
     file.close();
     Piece* pieces = new Piece[PIECECNT];
-    for(int i = 0; i < 5; i ++){
-        for(int j = 0; j < 5; j++){
+    for(int i = 0; i < sqrt(PIECECNT); i ++){
+        for(int j = 0; j < sqrt(PIECECNT); j++){
 
-            pieces[5*i + j] = *new Piece(100, arr, (i*100), j*100);
+            pieces[(int)(sqrt(PIECECNT))*i + j] = *new Piece((500/sqrt(PIECECNT)), arr, (i*(500/sqrt(PIECECNT))), j*(500/sqrt(PIECECNT)));
         }
     }
 
@@ -106,7 +109,8 @@ int main(int argc, char ** argv)
     //here we need to do random location
     //xOff + rand(0-400)
     //y = rand(0-400)
-    for(int i = 0; i < 25; i++){
+    for(int i = 0; i < PIECECNT; i++){
+        //g.playSound();
         int x1 = rand() % 400 + 10;
         int y1 = rand()%400;
         int rot = rand()%4;
@@ -210,7 +214,7 @@ int main(int argc, char ** argv)
         }
 
         g.update();
-        if(vicState == 25){
+        if(vicState == PIECECNT){
             //make the victory a bit more fun
             //audio? visuals?
             cout << "WIN";

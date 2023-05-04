@@ -38,6 +38,7 @@ void printAll(Piece* e, SDL_Plotter& g);
 void winThis(SDL_Plotter& g, string fileName);
 static int PIECECNT = 25;
 
+
 int main(int argc, char ** argv)
 {
     //Data Abstraction
@@ -279,3 +280,5 @@ void winThis(SDL_Plotter& g, string fileName){
     file.close();
     g.update();
 }
+
+

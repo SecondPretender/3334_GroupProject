@@ -3,8 +3,8 @@
 //          Christian Ocana
 /*Changelog:
  * 4/17/2023 created by Peter McGuinness
- * 4/18/2023 added printing functionality
- * 4/27/2023 added borders to pieces: Xavier
+ * 4/18/2023 added printing functionality:  Alex DeVries
+ * 4/27/2023 added borders to pieces: Xavier Lopez
  * 4/28/2023 added new border functionality: Peter McGuinness
  */
 //

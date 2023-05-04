@@ -34,45 +34,10 @@
 
 using namespace std;
 
-void drawCircle(point loc, int size, color c, SDL_Plotter& g);
 void printAll(Piece* e, SDL_Plotter& g);
 void winThis(SDL_Plotter& g, string fileName);
-
-//need to make a linked list of Pieces
-struct pieceLinker{
-    Piece curr;
-    pieceLinker* prev = nullptr;
-    pieceLinker* next = nullptr;
-    /*
-     * pieceLinker (constructor)
-     */
-    pieceLinker(){
-
-    }
-    /*
-     * pieceLinker (constructor using one Piece)
-     */
-    pieceLinker(Piece p){
-        curr = p;
-    }
-    /*
-     * pieceLinker (copy constructor)
-     */
-    pieceLinker(Piece p, pieceLinker* p1, pieceLinker* p2){
-        curr = p;
-        prev = p1;
-        next = p2;
-    }
-    /*
-     * ~pieceLinker (destructor)
-     */
-    ~pieceLinker(){
-        delete next;
-    }
-};
-
-void printLinked(pieceLinker* l, SDL_Plotter& g);
 static int PIECECNT = 25;
+
 
 int main(int argc, char ** argv)
 {
@@ -263,36 +228,6 @@ int main(int argc, char ** argv)
     return 0;
 }
 
-/* drawCircle
- * description: plots a circle based on the given location, size, and color
- * return: nothing
- * pre: a location point, size, color, and SDL Plotter exist
- * post: a circle matching the given descriptions is plotted
- */
-void drawCircle(point loc, int size, color c, SDL_Plotter& g){
-    for(double i = -size; i <= size;i+=0.1){
-        for(double j = -size; j <= size; j+=0.1){
-            if(i*i + j*j <= size*size){
-                g.plotPixel(round(loc.x+i),round(loc.y+j),c);
-            }
-        }
-    }
-
-}
-/* printLinked
- * description: prints the puzzle pieces that are connected together
- * return: nothing
- * pre: connected puzzle pieces and SDL Plotter exist
- * post: displays all puzzle pieces that are officially linked with each other
- */
-void printLinked(pieceLinker* l, SDL_Plotter& g){
-    //cout << l->curr.getXc1();
-    l->curr.printSquare(g);
-    //cout << "a" << endl;
-    if(l->next != nullptr){
-        printLinked(l->next, g);
-    }
-}
 /* printAll
  * description: plots all puzzle pieces
  * return: nothing
@@ -345,4 +280,5 @@ void winThis(SDL_Plotter& g, string fileName){
     file.close();
     g.update();
 }
+
 

@@ -84,10 +84,22 @@ public:
         bCol = tCol;
         orient = 0;
     }
+    /* setLoc
+     * description: sets the location variables of the piece
+     * return: void
+     * pre: parameters x and y are integer values
+     * post: sets xC1 and yC1 to x and y
+    */
     void setLoc(int x, int y){
         xC1 = x;
         yC1 = y;
     }
+    /* printSquare
+     * description: prints out the Square
+     * return: void
+     * pre: Plotter object g exists
+     * post: printts the piece represented as a square
+    */
     void printSquare(SDL_Plotter& g){
 
         for(int i = 0; i < size; i++){
@@ -101,6 +113,12 @@ public:
         }
 
     }
+    /* printBorder
+     * description: pritns out a border
+     * return: void
+     * pre: Plotter g exists
+     * post: prints the border of the square
+    */
     void printBorder(SDL_Plotter &g){
         for(int i = 0; i < size; i++){
             if(i == 0 || i == size-1) {
@@ -114,6 +132,12 @@ public:
 
         }
     }
+    /* rotateClockwise
+     * description: rotates the piece's data clockwise 90 degrees
+     * return: void
+     * pre: piece has a valid initialized square matrix of colors
+     * post: color matrix is mathematically rotated
+    */
     void rotateClockwise(){
         for(int i = 0; i < size; i++){
             for(int j = i; j < size; j++){
@@ -127,6 +151,12 @@ public:
         }
         orient = (orient +1)%4;
     }
+    /* rotateCounter
+     * description: rotates the piece's data counterclockwise.
+     * return: void
+     * pre: piece has an initialized squarematrix of colors.
+     * post: data is mathematically rotated counterclockwise.
+    */
     void rotateCounter(){
         /*
         for(int j = 0; j < size; j++){
@@ -148,6 +178,13 @@ public:
         }
         orient = (orient-1)%4;
     }
+    /* clickable
+     * description: returns boolean determining if the piece is clickable
+     * return: true if input matches over the piece's physical representation,
+     * false else
+     * pre: x and y are valid integers, piece has initialized values
+     * post: if x and y are both within the pieces area, return true. else, false
+    */
     bool clickable(int x, int y){
         if(!click){
             return false;
@@ -166,6 +203,15 @@ public:
         click  = false;
     }
 
+    /* clickPlace
+     * description: returns a boolean representing if the piece has reached
+     * its final spot
+     * return: true if it has, else false
+     * pre: x and y are valid integers, piece has initialized values and
+     * associated PcShell.
+     * post: returns true if the piece has made it to the final place, false else
+     * sets the piece's location to the PcShell.
+    */
     bool clickPlace(int x, int y){
         //first check if it collides with associated PcShell
         color tCol(0, 0, 0);

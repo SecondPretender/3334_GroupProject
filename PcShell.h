@@ -31,6 +31,13 @@ public:
         return yC1;
     }
 
+    /* checkCollide
+     * description: returns true if the input values match to the PcShell's
+     * physical representation
+     * return: bool true if match, false else
+     * pre: x and y are valid integers, PcShell has initialized values.
+     * post: returns true if match, false else
+    */
     bool checkCollide(int x, int y){
         int tX = x - xC1;
         int tY = y - yC1;

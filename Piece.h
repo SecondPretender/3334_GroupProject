@@ -3,8 +3,8 @@
 //          Christian Ocana
 /*Changelog:
  * 4/17/2023 created by Peter McGuinness
- * 4/18/2023 added printing functionality:  Alex DeVries
- * 4/27/2023 added borders to pieces: Xavier Lopez
+ * 4/18/2023 added printing functionality
+ * 4/27/2023 added borders to pieces: Xavier
  * 4/28/2023 added new border functionality: Peter McGuinness
  */
 //
@@ -101,12 +101,13 @@ public:
      * post: printts the piece represented as a square
     */
     void printSquare(SDL_Plotter& g){
-
+        //iterates through and plots each individual pixel
         for(int i = 0; i < size; i++){
             for(int j = 0; j < size; j++) {
                 g.plotPixel(xC1 + i, yC1 + j, pVis[i][j]);
             }
         }
+        //if not in final place, print border
         if(click == true){
             //cout << bCol.B << bCol.G << bCol.R;
             printBorder(g);
@@ -136,14 +137,17 @@ public:
      * description: rotates the piece's data clockwise 90 degrees
      * return: void
      * pre: piece has a valid initialized square matrix of colors
-     * post: color matrix is mathematically rotated
+     * post: color matrix is mathematically rotated, orient has proper track
+     * of rotational direction
     */
     void rotateClockwise(){
+        //swaps values across diag running from (0, size) to (size, 0)
         for(int i = 0; i < size; i++){
             for(int j = i; j < size; j++){
                 swap(pVis[i][j], pVis[j][i]);
             }
         }
+        //inverts row to complete rotation
         for(int i = 0; i < size; i++){
             for(int j = 0; j < size/2; j++){
                 swap(pVis[j][i], pVis[size-j-1][i]);
@@ -155,22 +159,17 @@ public:
      * description: rotates the piece's data counterclockwise.
      * return: void
      * pre: piece has an initialized squarematrix of colors.
-     * post: data is mathematically rotated counterclockwise.
+     * post: data is mathematically rotated counterclockwise. orient has proper track
+     * of rotational direction
     */
     void rotateCounter(){
-        /*
-        for(int j = 0; j < size; j++){
-            for(int i = 0; i < j; i++){
-                swap(pVis[i][j], pVis[j][i]);
-            }
-        }*/
-
+        //swaps values across diag running from (0,0) to (size,size)
         for(int j = size-1; j >= 0; j--){
             for(int i = 0; i < j; i++){
                 swap(pVis[i][size-j-1], pVis[j][size-i-1]);
             }
         }
-
+        //inverts rows, finishing rotation
         for(int i = 0; i < size; i++){
             for(int j = 0; j < size/2; j++){
                 swap(pVis[j][i], pVis[size-j-1][i]);
@@ -179,11 +178,13 @@ public:
         orient = (orient-1)%4;
     }
     /* clickable
-     * description: returns boolean determining if the piece is clickable
+     * description: returns boolean determining if the piece is clickable. sets
+     * border to be green.
      * return: true if input matches over the piece's physical representation,
      * false else
      * pre: x and y are valid integers, piece has initialized values
      * post: if x and y are both within the pieces area, return true. else, false
+     * border is green now.
     */
     bool clickable(int x, int y){
         if(!click){

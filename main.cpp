@@ -21,9 +21,64 @@
  *           when the game launches: Christian Ocana
  * 5/03/2023 created detailed comments in the file: Christian Ocana
  *
- * Assumptions: It is assumed that the in-game pictures are the only pictures
- * the user can have access to. It is also assumed that the user can restart
- * the game by exiting out of the tab, even if they have not won yet.
+ * * Data Abstraction:
+
+*     input file stream is opened
+*     a queue of piece objects so that all puzzle pieces are being kept
+*     track of
+*     an array of color objects for every pixel of the image
+*     an integer vicState which determines how many puzzle pieces have
+*     been properly placed
+*     3 integers height, width, and xOff for placing the starting image and
+*     its pieces in the starting position
+*     an integer pick, which is randomly determined so that one of four
+*     possible images is randomly selected
+*
+* Input:
+*     The program reads in mouseclicks and particular
+*     key presses so that the user can perform certain tasks while
+*     solving the puzzle.  Entering 'C' clears the screen, 'Q' and 'E'
+*     will rotate the piece clockwise and counterclockwise respectively
+*
+* Process:
+*     First, a random number between 0-3 is generated, selecting which
+*     picture file will be used in the creation of the puzzle.  Then
+*     a file stream will open up the text file containing the
+*     dimensions of the image as well as the RGB values of every
+*     pixel in the chosen image.  Then the color and piece object
+*     arrays are initialized with the proper data.  The piece objects
+*     are then randomly placed on the right hand side of the screen
+*     so that they are mixed up for added challenge, and printed
+*     to the screen.  The pieces are also randomly rotated
+*     before they are printed as an extra level of challenge.
+*     Then while the exit state has not been triggered, check
+*     if the user has performed a mouse click.  If one of the
+*     piece objects has been clicked on, its selected state
+*     has been set to true.  Then, if either the 'Q' or 'E' keys
+*     have been pressed while a piece has been selected, rotate the
+*     piece either clockwise or counterclockwise.  if a different
+*     set of coordinates has been selected on the plotter window
+*     and a piece has been selected, update its coordinates to that
+*     new location.  If any of these cases have been triggered, update
+*     the sdl plotter window after the changes to the object's
+*     data has been made.  Finally, if all 25 piece objects
+*     have been properly placed on the left side of the screen, making
+*     the vicState variable equal 25, print the win screen of the game
+*     and wait for the exit key to be pressed to close the file stream
+*     and close the sdl plotter window.
+*
+* Output:
+*     The image randomly selected will be separated into puzzle pieces
+*     that the user can interact with by clicking on and pressing certain
+*     keys.  A win screen will be properly outputted to the screen if the
+*     puzzle provided has been solved successfully.
+*
+* Assumptions:
+*     It is assumed that the user only wants to solve one of the puzzles
+*     pre-made by the program
+*     It is assumed that the user only wants a 5x5 puzzle
+*     It is assumed that the user will only interact with the puzzle
+*     piece UI
 */
 #include <iostream>
 #include <cmath>
